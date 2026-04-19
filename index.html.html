@@ -5,8 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>BeausCatGame</title>
 
-    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/TemplateData/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/TemplateData/style.css">
+    <!-- Updated repo -->
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGameUPDATE@latest/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGameUPDATE@latest/TemplateData/style.css">
 
     <style>
         body {
@@ -55,10 +56,11 @@
 
         function showError(msg) {
             console.error(msg);
+            alert(msg);
         }
 
-        // 🔥 IMPORTANT: cache-bust so NEW builds always load
-        const buildUrl = "https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/Build?v=" + Date.now();
+        // ✅ Correct build path (UPDATED repo)
+        const buildUrl = "https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGameUPDATE@latest/Build";
 
         const config = {
             dataUrl: buildUrl + "/BeausCatGame.data",
@@ -84,7 +86,6 @@
                 loadingBar.style.display = "none";
             }).catch((message) => {
                 showError(message);
-                alert(message);
             });
         };
 
