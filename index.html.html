@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>BeausCatGame</title>
+
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/TemplateData/style.css">
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #unity-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #unity-canvas {
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+
+        #unity-loading-bar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="unity-container">
+        <canvas id="unity-canvas"></canvas>
+
+        <div id="unity-loading-bar">
+            <div id="unity-progress-bar-empty">
+                <div id="unity-progress-bar-full"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.querySelector("#unity-canvas");
+        const loadingBar = document.querySelector("#unity-loading-bar");
+        const progressBarFull = document.querySelector("#unity-progress-bar-full");
+
+        function showError(msg) {
+            console.error(msg);
+        }
+
+        // 🔥 IMPORTANT: cache-bust so NEW builds always load
+        const buildUrl = "https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/Build?v=" + Date.now();
+
+        const config = {
+            dataUrl: buildUrl + "/BeausCatGame.data",
+            frameworkUrl: buildUrl + "/BeausCatGame.framework.js",
+            codeUrl: buildUrl + "/BeausCatGame.wasm",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "BeausCatGame",
+            productName: "BeausCatGame",
+            productVersion: "1.0"
+        };
+
+        const loaderUrl = buildUrl + "/BeausCatGame.loader.js";
+
+        loadingBar.style.display = "block";
+
+        const script = document.createElement("script");
+        script.src = loaderUrl;
+
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = (100 * progress) + "%";
+            }).then(() => {
+                loadingBar.style.display = "none";
+            }).catch((message) => {
+                showError(message);
+                alert(message);
+            });
+        };
+
+        script.onerror = () => {
+            showError("Failed to load loader.js");
+        };
+
+        document.body.appendChild(script);
+    </script>
+
+</body>
+</html>
